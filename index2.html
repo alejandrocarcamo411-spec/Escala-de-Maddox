@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escala de Maddox - Flebitis</title>
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --card: #ffffff;
+        --primary: #1d4ed8;
+        --primary-dark: #163ea8;
+        --success: #15803d;
+        --warning: #d97706;
+        --danger: #b91c1c;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --border: #dfe7f1;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #eef4ff, #f8fbff);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 860px;
+        margin: 40px auto;
+        padding: 24px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(29, 78, 216, 0.08);
+        padding: 28px;
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 8px;
+        color: var(--primary-dark);
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        margin: 0 0 24px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #f9fbff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        transition: all 0.2s ease;
+      }
+
+      .option:hover {
+        border-color: #b5c9f5;
+      }
+
+      .option input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+      }
+
+      .option label {
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .actions {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      button {
+        border: none;
+        background: var(--primary);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 14px 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      button:hover {
+        background: var(--primary-dark);
+      }
+
+      .result {
+        margin-top: 20px;
+        border-radius: 14px;
+        padding: 18px 20px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+      }
+
+      .result h2 {
+        margin: 0 0 8px;
+        font-size: 1.4rem;
+      }
+
+      .result .grade {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+      }
+
+      .result .description {
+        margin-top: 10px;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text);
+      }
+
+      .legend {
+        margin-top: 24px;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+
+      .legend ul {
+        padding-left: 18px;
+        margin: 10px 0 0;
+      }
+
+      .legend li {
+        margin: 6px 0;
+      }
+
+      @media (max-width: 600px) {
+        .card {
+          padding: 20px 16px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>Escala de Maddox</h1>
+        <p class="subtitle">
+          Herramienta para valorar la flebitis en pacientes con catéter venoso periférico.
+          Marque los signos observados y el sistema calculará el grado de flebitis.
+        </p>
+
+        <div class="form-grid">
+          <div class="option">
+            <input type="checkbox" id="enrojecimiento" />
+            <label for="enrojecimiento">Eritema o enrojecimiento</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="dolor" />
+            <label for="dolor">Dolor en el trayecto venoso</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="edema" />
+            <label for="edema">Edema</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="cordon" />
+            <label for="cordon">Cordón venoso palpable</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="exudado" />
+            <label for="exudado">Exudado purulento</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" onclick="calcularEscala()">Calcular grado</button>
+        </div>
+
+        <div class="result" id="resultado">
+          <h2>Resultado</h2>
+          <div class="grade" id="grado">0</div>
+          <div class="description" id="descripcion">
+            Seleccione los signos clínicos para obtener el resultado de la valoración.
+          </div>
+        </div>
+
+        <div class="legend">
+          <strong>Interpretación:</strong>
+          <ul>
+            <li>0 = Sin flebitis</li>
+            <li>1 = Enrojecimiento</li>
+            <li>2 = Eritema + dolor</li>
+            <li>3 = Eritema + dolor + edema</li>
+            <li>4 = Eritema + dolor + edema + cordón venoso palpable</li>
+            <li>5 = Eritema + dolor + edema + cordón venoso + exudado purulento</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function calcularEscala() {
+        const rojo = document.getElementById('enrojecimiento').checked;
+        const dolor = document.getElementById('dolor').checked;
+        const edema = document.getElementById('edema').checked;
+        const cordon = document.getElementById('cordon').checked;
+        const exudado = document.getElementById('exudado').checked;
+
+        let grado = 0;
+        let descripcion = 'Sin signos de flebitis.';
+
+        if (rojo && !dolor && !edema && !cordon && !exudado) {
+          grado = 1;
+          descripcion = 'Se observa enrojecimiento en el sitio de punción, compatible con flebitis leve.';
+        } else if (rojo && dolor && !edema && !cordon && !exudado) {
+          grado = 2;
+          descripcion = 'Hay eritema y dolor en el trayecto venoso, compatible con flebitis moderada.';
+        } else if (rojo && dolor && edema && !cordon && !exudado) {
+          grado = 3;
+          descripcion = 'Existe eritema, dolor y edema, lo que indica flebitis con afectación más evidente.';
+        } else if (rojo && dolor && edema && cordon && !exudado) {
+          grado = 4;
+          descripcion = 'Se observa dolor, eritema, edema y cordón venoso palpable; es una flebitis severa.';
+        } else if (rojo && dolor && edema && cordon && exudado) {
+          grado = 5;
+          descripcion = 'Se evidencia flebitis grave con presencia de exudado purulento, requiere evaluación clínica urgente.';
+        } else if (!rojo && !dolor && !edema && !cordon && !exudado) {
+          grado = 0;
+          descripcion = 'Sin signos de flebitis.';
+        } else {
+          grado = 1;
+          descripcion = 'Se han identificado signos compatibles con flebitis; debe realizarse valoración clínica completa.';
+        }
+
+        document.getElementById('grado').textContent = grado;
+        document.getElementById('descripcion').textContent = descripcion;
+      }
+    </script>
+  </body>
+</html>
