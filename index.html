@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escala de Maddox</title>
+    <style>
+      :root {
+        --primary: #1f4f8b;
+        --primary-light: #dfeeff;
+        --success: #2d8f5d;
+        --warning: #d97b19;
+        --danger: #d94848;
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --text: #1d2a39;
+        --muted: #5c6f82;
+        --border: #dfe7f2;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #edf4ff, #f8fafc);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 980px;
+        margin: 40px auto;
+        padding: 24px;
+      }
+
+      .header {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 28px;
+        box-shadow: 0 10px 30px rgba(31, 79, 139, 0.06);
+      }
+
+      .header h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 3vw, 2.6rem);
+        color: var(--primary);
+      }
+
+      .header p {
+        margin: 0;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 24px;
+        margin-top: 24px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(31, 79, 139, 0.05);
+      }
+
+      form {
+        padding: 24px;
+      }
+
+      .field-group {
+        margin-bottom: 20px;
+      }
+
+      .field-group h2 {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+        color: var(--primary);
+      }
+
+      .checklist {
+        display: grid;
+        gap: 10px;
+      }
+
+      label.option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #fafcff;
+        cursor: pointer;
+      }
+
+      input[type="checkbox"], select {
+        accent-color: var(--primary);
+      }
+
+      select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: white;
+        color: var(--text);
+        font-size: 1rem;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 18px;
+      }
+
+      button {
+        border: none;
+        border-radius: 12px;
+        background: var(--primary);
+        color: white;
+        padding: 12px 20px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.15s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .result-panel {
+        padding: 24px;
+      }
+
+      .result-badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .result-name {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        color: var(--text);
+      }
+
+      .result-description {
+        margin: 0;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Escala de Maddox</h1>
+        <p>
+          Valoración de flebitis en pacientes con catéter venoso periférico. Selecciona
+          los signos presentes para obtener el grado de evaluación sugerido.
+        </p>
+      </header>
+
+      <div class="layout">
+        <form id="assessment-form" class="card">
+          <div class="field-group">
+            <h2>Signos clínicos</h2>
+            <div class="checklist">
+              <label class="option"><input type="checkbox" id="dolor" /> Dolor en la zona de punción</label>
+              <label class="option"><input type="checkbox" id="eritema" /> Eritema</label>
+              <label class="option"><input type="checkbox" id="hinchazon" /> Hinchazón</label>
+              <label class="option"><input type="checkbox" id="endurecimiento" /> Endurecimiento</label>
+              <label class="option"><input type="checkbox" id="cordon" /> Cordón venoso palpable</label>
+              <label class="option"><input type="checkbox" id="secrecion" /> Secreción purulenta</label>
+              <label class="option"><input type="checkbox" id="trombosis" /> Sospecha de trombosis</label>
+              <label class="option"><input type="checkbox" id="perfusion" /> Alteración de perfusión</label>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <h2>Extensión del cordón venoso</h2>
+            <select id="extension">
+              <option value="no-aplica">No aplica</option>
+              <option value="menor-6">Menor de 6 cm</option>
+              <option value="mayor-6">Mayor de 6 cm</option>
+            </select>
+          </div>
+
+          <div class="actions">
+            <button type="submit">Evaluar</button>
+          </div>
+        </form>
+
+        <aside class="card result-panel">
+          <div id="result-badge" class="result-badge">Grado 0</div>
+          <h2 id="result-name" class="result-name">Grado 0</h2>
+          <p id="result-description" class="result-description">
+            No se evidencia dolor, eritema, hinchazón, endurecimiento ni cordón venoso palpable.
+            La zona está sin signos de flebitis.
+          </p>
+        </aside>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
